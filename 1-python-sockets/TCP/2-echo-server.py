@@ -1,6 +1,6 @@
 #!/usr/bin python3
 import socket
-HOST = "192.168.0.148"  # Direccion de la interfaz de loopback estándar (localhost)
+HOST = "localhost"  # Direccion de la interfaz de loopback estándar (localhost)
 PORT = 65432 # Puerto que usa el cliente  (los puertos sin provilegios son > 1023)
 buffer_size = 1024
 
