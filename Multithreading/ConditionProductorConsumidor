@@ -1,0 +1,39 @@
+import threading
+import time
+
+# Una variable global para simular un recurso compartido.
+recurso = None
+
+# Creamos un objeto Condition
+cond = threading.Condition()
+
+def productor():
+    global recurso
+    print("El productor está creando un recurso...")
+    time.sleep(2)  # Simulamos un tiempo de espera para crear el recurso
+    with cond:  # Usamos el bloque with para asegurar que se adquiera el lock
+        recurso = "Elemento producido"
+        print("El productor ha producido un recurso.")
+        cond.notify()  # Notificamos al hilo consumidor que el recurso está listo
+
+def consumidor():
+    global recurso
+    with cond:  # Aseguramos que este hilo tiene el lock
+        while recurso is None:  # Mientras no haya recurso, el consumidor espera
+            print("El consumidor está esperando...")
+            cond.wait()  # Espera hasta que el productor notifique
+        print(f"El consumidor ha consumido el recurso: {recurso}")
+
+# Creamos los hilos
+hilo_productor = threading.Thread(target=productor)
+hilo_consumidor = threading.Thread(target=consumidor)
+
+# Iniciamos los hilos
+hilo_productor.start()
+hilo_consumidor.start()
+
+# Esperamos a que ambos hilos terminen
+hilo_productor.join()
+hilo_consumidor.join()
+
+print("Fin del programa.")
