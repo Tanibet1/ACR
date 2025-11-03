@@ -12,7 +12,7 @@ def productor():
     print("El productor está creando un recurso...")
     time.sleep(2)  # Simulamos un tiempo de espera para crear el recurso
     with cond:  # Usamos el bloque with para asegurar que se adquiera el lock
-        recurso = "Elemento producido"
+        recurso = "Recurso producido"
         print("El productor ha producido un recurso.")
         cond.notify()  # Notificamos al hilo consumidor que el recurso está listo
 
